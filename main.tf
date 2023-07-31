@@ -1,17 +1,17 @@
-resource "vault_auth_backend" "kubernetes" {
-  type = "kubernetes"
-  path = var.path
+resource "vault_kubernetes_secret_backend" "config" {
+  path                      = var.path
+  description               = "kubernetes secrets engine"
+  default_lease_ttl_seconds = var.token_ttl
+  max_lease_ttl_seconds     = var.max_timeout
+  kubernetes_host           = var.kubernetes_host
+  kubernetes_ca_cert        = var.kubernetes_ca_cert
 }
 
-resource "vault_kubernetes_auth_backend_config" "example" {
-  backend                = vault_auth_backend.kubernetes.path
-  kubernetes_host        = var.kubernetes_host
-}
-
-resource "vault_kubernetes_auth_backend_role" "example" {
-  backend                          = vault_auth_backend.kubernetes.path
-  role_name                        = var.role_name
-  bound_service_account_names      = var.k8_service_accounts
-  bound_service_account_namespaces = var.k8_namespaces
-  token_ttl                        = var.token_ttl
+resource "vault_kubernetes_secret_backend_role" "backend-role" {
+  backend                       = vault_kubernetes_secret_backend.config.path
+  name                          = var.role_name
+  allowed_kubernetes_namespaces = var.k8_namespaces
+  token_max_ttl                 = var.max_timeout
+  token_default_ttl             = var.token_ttl
+  service_account_name          = var.k8_service_accounts
 }

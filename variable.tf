@@ -21,12 +21,25 @@ variable "token_ttl" {
   EOT
 }
 
+variable "max_timeout" {
+  type        = string
+  description = <<-EOT
+  The maximum lifetime for generated tokens in number of seconds. 
+  Its current value will be referenced at renewal time.
+  EOT
+}
+
 variable "k8_service_accounts" {
-  type        = list(string)
+  type        = string
   description = "list of K8 user service accounts"
 }
 
 variable "k8_namespaces" {
   type        = list(string)
   description = "The list K8 namespace that should be accessible by the K8 user service account"
+}
+
+variable "kubernetes_ca_cert" {
+  type        = string
+  description = "The ca cert of k8 cluster"
 }

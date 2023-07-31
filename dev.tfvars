@@ -1,6 +1,8 @@
-kubernetes_host     = "http://example.com:443"
-role_name           = "test"
-path                = "test-replication/test-k8-auth"
+kubernetes_host     = "<cluster_url>"
+role_name           = "app-role"
+path                = "kube-test-2"
 token_ttl           = "3600"
-k8_service_accounts = ["test"] #list of K8 user service accounts
-k8_namespaces       = ["test"] #The list K8 namespace that should be accessible by the K8 user service account
+max_timeout         = "7200"
+k8_service_accounts = "sample-app" #list of K8 user service accounts
+k8_namespaces       = ["demo"] #The list K8 namespace that should be accessible by the K8 user service account
+kubernetes_ca_cert = "<ca-cert>"
